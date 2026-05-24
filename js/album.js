@@ -124,12 +124,60 @@ function renderPhotos() {
   const photos = currentAlbum.photos || [];
   
   container.innerHTML = '';
-  container.className = `photos-container layout-${currentAlbum.layout || 'masonry'}`;
   
   if (!photos.length) { empty.style.display = 'block'; return; }
   empty.style.display = 'none';
   
-  photos.forEach((photo, i) => container.appendChild(createPhotoItem(photo, i)));
+  if (currentAlbum.layout === 'sectioned') {
+    container.className = 'photos-container layout-sectioned';
+    
+    // Group photos by their section name
+    const groups = {};
+    const noSection = [];
+    
+    photos.forEach(photo => {
+      if (photo.section) {
+        if (!groups[photo.section]) groups[photo.section] = [];
+        groups[photo.section].push(photo);
+      } else {
+        noSection.push(photo);
+      }
+    });
+
+    // 1. Render uncategorized/no-section photos at the top (without a header)
+    if (noSection.length) {
+      const grid = document.createElement('div');
+      grid.className = 'photos-sub-grid';
+      noSection.forEach((photo) => {
+        const originalIndex = photos.findIndex(p => p.id === photo.id);
+        grid.appendChild(createPhotoItem(photo, originalIndex));
+      });
+      container.appendChild(grid);
+    }
+
+    // 2. Render each section with a beautiful title and lines
+    Object.keys(groups).forEach(sectionTitle => {
+      const secHeader = document.createElement('div');
+      secHeader.className = 'photo-section-header';
+      secHeader.innerHTML = `
+        <span class="photo-section-line"></span>
+        <h3 class="photo-section-title">${sectionTitle}</h3>
+        <span class="photo-section-line"></span>
+      `;
+      container.appendChild(secHeader);
+
+      const grid = document.createElement('div');
+      grid.className = 'photos-sub-grid';
+      groups[sectionTitle].forEach((photo) => {
+        const originalIndex = photos.findIndex(p => p.id === photo.id);
+        grid.appendChild(createPhotoItem(photo, originalIndex));
+      });
+      container.appendChild(grid);
+    });
+  } else {
+    container.className = `photos-container layout-${currentAlbum.layout || 'masonry'}`;
+    photos.forEach((photo, i) => container.appendChild(createPhotoItem(photo, i)));
+  }
 }
 
 function createPhotoItem(photo, index) {
@@ -491,6 +539,7 @@ function openEditPhoto(photoId) {
   document.getElementById('editPhotoTitle').value = photo.title || '';
   document.getElementById('editPhotoCaption').value = photo.caption || '';
   document.getElementById('editPhotoRatio').value = photo.ratio || 'auto';
+  document.getElementById('editPhotoSection').value = photo.section || '';
   openModal('editPhotoModal');
 }
 
@@ -499,7 +548,8 @@ function savePhotoEdit() {
   updatePhoto(currentAlbumId, editingPhotoId, {
     title: document.getElementById('editPhotoTitle').value.trim(),
     caption: document.getElementById('editPhotoCaption').value.trim(),
-    ratio: document.getElementById('editPhotoRatio').value
+    ratio: document.getElementById('editPhotoRatio').value,
+    section: document.getElementById('editPhotoSection').value.trim()
   });
   currentAlbum = getAlbum(currentAlbumId);
   renderPhotos();

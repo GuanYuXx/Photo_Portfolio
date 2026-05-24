@@ -45,6 +45,7 @@
         <option value="grid">網格排版</option>
         <option value="fullwidth">全寬排版</option>
         <option value="duo">雙欄排版</option>
+        <option value="sectioned">分區區塊排版</option>
       </select>
       <button class="btn-toolbar" onclick="openAddPhotoModal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -206,6 +207,8 @@
           <option value="square">正方形 (1:1)</option>
           <option value="wide">超寬 (16:9)</option>
         </select>
+        <label>分區區塊名稱</label>
+        <input type="text" id="editPhotoSection" class="modal-input" placeholder="例：第一幕：清晨、同角度場景（留空代表不分區）">
       </div>
       <div class="modal-footer">
         <button class="btn-secondary" onclick="closeModal('editPhotoModal')">取消</button>
