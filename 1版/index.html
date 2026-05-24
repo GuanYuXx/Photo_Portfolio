@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LENS — Photography Portfolio</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">LENS</a>
+      <div class="nav-right">
+        <span class="nav-subtitle">Photography Portfolio</span>
+        <button class="edit-toggle-btn" id="editToggleBtn" onclick="toggleEditMode()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span id="editBtnText">編輯</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        <span class="hero-title-line">Light &amp;</span>
+        <span class="hero-title-line italic">Moment</span>
+      </h1>
+      <p class="hero-desc" id="heroDesc">用鏡頭捕捉每一個轉瞬即逝的瞬間</p>
+    </div>
+    <div class="hero-scroll-hint">↓ scroll</div>
+  </section>
+
+  <!-- EDIT TOOLBAR (hidden by default) -->
+  <div class="edit-toolbar" id="editToolbar">
+    <div class="edit-toolbar-inner">
+      <span class="edit-toolbar-label">✦ 編輯模式</span>
+      <button class="btn-toolbar" onclick="openNewAlbumModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        新增作品集
+      </button>
+      <button class="btn-toolbar" onclick="editHeroText()">編輯標語</button>
+      <button class="btn-toolbar btn-save" onclick="saveAll()">儲存</button>
+    </div>
+  </div>
+
+  <!-- ALBUMS GRID -->
+  <main class="main">
+    <div class="section-header">
+      <h2 class="section-title">作品集</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="albums-grid" id="albumsGrid">
+      <!-- Albums rendered by JS -->
+    </div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <p>尚無作品集<br><small>點擊「新增作品集」開始建立</small></p>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-copy">© 2025 LENS Photography</p>
+  </footer>
+
+  <!-- MODAL: New Album -->
+  <div class="modal-overlay" id="newAlbumModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>新增作品集</h3>
+        <button class="modal-close" onclick="closeModal('newAlbumModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>作品集名稱</label>
+        <input type="text" id="newAlbumTitle" placeholder="例：街頭攝影 2024" class="modal-input">
+        <label>副標題 / 描述</label>
+        <input type="text" id="newAlbumSub" placeholder="城市的呼吸" class="modal-input">
+        <label>封面圖片網址</label>
+        <input type="url" id="newAlbumCover" placeholder="https://..." class="modal-input">
+        <label>標籤（逗號分隔）</label>
+        <input type="text" id="newAlbumTags" placeholder="街拍, 黑白, 人文" class="modal-input">
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('newAlbumModal')">取消</button>
+        <button class="btn-primary" onclick="createAlbum()">建立</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Edit Hero -->
+  <div class="modal-overlay" id="heroModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>編輯首頁標語</h3>
+        <button class="modal-close" onclick="closeModal('heroModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>標語文字</label>
+        <input type="text" id="heroInput" class="modal-input" placeholder="用鏡頭捕捉...">
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('heroModal')">取消</button>
+        <button class="btn-primary" onclick="saveHeroText()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

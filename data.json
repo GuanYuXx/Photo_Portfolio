@@ -1,0 +1,122 @@
+{
+  "heroText": "用鏡頭捕捉每一個轉瞬即逝的瞬間",
+  "albums": [
+    {
+      "id": "album_001",
+      "title": "街頭呼吸",
+      "subtitle": "城市的喧囂與靜謐",
+      "cover": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
+      "tags": ["街拍", "城市", "黑白"],
+      "layout": "masonry",
+      "createdAt": "2024-01-15",
+      "photos": [
+        {
+          "id": "p001",
+          "url": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=80",
+          "title": "霧中的城市",
+          "caption": "清晨的霧氣籠罩整個城市，街燈漸漸熄滅",
+          "ratio": "landscape"
+        },
+        {
+          "id": "p002",
+          "url": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1200&q=80",
+          "title": "捷運出口",
+          "caption": "忙碌的通勤者",
+          "ratio": "portrait"
+        },
+        {
+          "id": "p003",
+          "url": "https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1200&q=80",
+          "title": "老街巷弄",
+          "caption": "",
+          "ratio": "auto"
+        },
+        {
+          "id": "p004",
+          "url": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80",
+          "title": "夜市燈火",
+          "caption": "台灣夜市特有的溫暖光芒",
+          "ratio": "landscape"
+        },
+        {
+          "id": "p005",
+          "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
+          "title": "天橋",
+          "caption": "",
+          "ratio": "square"
+        },
+        {
+          "id": "p006",
+          "url": "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=1200&q=80",
+          "title": "雨後",
+          "caption": "雨後的街道倒映著霓虹",
+          "ratio": "portrait"
+        }
+      ]
+    },
+    {
+      "id": "album_002",
+      "title": "山與海之間",
+      "subtitle": "台灣島嶼的自然風貌",
+      "cover": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+      "tags": ["風景", "自然", "台灣"],
+      "layout": "fullwidth",
+      "createdAt": "2024-03-20",
+      "photos": [
+        {
+          "id": "p101",
+          "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80",
+          "title": "合歡山雲海",
+          "caption": "破曉時分，雲海從山谷升起",
+          "ratio": "wide"
+        },
+        {
+          "id": "p102",
+          "url": "https://images.unsplash.com/photo-1439405326854-014607f694d7?w=1400&q=80",
+          "title": "太平洋的邊界",
+          "caption": "",
+          "ratio": "wide"
+        },
+        {
+          "id": "p103",
+          "url": "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1400&q=80",
+          "title": "瀑布之聲",
+          "caption": "深山中的秘境瀑布",
+          "ratio": "portrait"
+        }
+      ]
+    },
+    {
+      "id": "album_003",
+      "title": "人物肖像",
+      "subtitle": "Portraits of Life",
+      "cover": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80",
+      "tags": ["人像", "肖像", "光影"],
+      "layout": "grid",
+      "createdAt": "2024-05-10",
+      "photos": [
+        {
+          "id": "p201",
+          "url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=80",
+          "title": "光之窗",
+          "caption": "午後窗邊的逆光",
+          "ratio": "portrait"
+        },
+        {
+          "id": "p202",
+          "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80",
+          "title": "眼神",
+          "caption": "",
+          "ratio": "portrait"
+        },
+        {
+          "id": "p203",
+          "url": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=1200&q=80",
+          "title": "思緒",
+          "caption": "安靜的片刻",
+          "ratio": "portrait"
+        }
+      ]
+    }
+  ]
+}

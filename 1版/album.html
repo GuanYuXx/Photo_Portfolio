@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>作品集 — LENS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/album.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">← LENS</a>
+      <div class="nav-right">
+        <span class="nav-subtitle" id="albumBreadcrumb"></span>
+        <button class="edit-toggle-btn" id="editToggleBtn" onclick="toggleEditMode()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span id="editBtnText">編輯</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ALBUM HERO -->
+  <section class="album-hero" id="albumHero">
+    <div class="album-hero-overlay"></div>
+    <div class="album-hero-content">
+      <div class="album-tags" id="albumTags"></div>
+      <h1 class="album-title" id="albumTitle">作品集</h1>
+      <p class="album-subtitle" id="albumSubtitle"></p>
+      <div class="album-meta" id="albumMeta"></div>
+    </div>
+  </section>
+
+  <!-- EDIT TOOLBAR -->
+  <div class="edit-toolbar" id="editToolbar">
+    <div class="edit-toolbar-inner">
+      <span class="edit-toolbar-label">✦ 編輯模式</span>
+      <select class="layout-select" id="layoutSelect" onchange="changeLayout(this.value)">
+        <option value="masonry">磚牆排版</option>
+        <option value="grid">網格排版</option>
+        <option value="fullwidth">全寬排版</option>
+        <option value="duo">雙欄排版</option>
+      </select>
+      <button class="btn-toolbar" onclick="openAddPhotoModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        新增照片
+      </button>
+      <button class="btn-toolbar" onclick="openEditAlbumModal()">編輯資訊</button>
+      <button class="btn-toolbar btn-danger" onclick="deleteAlbum()">刪除作品集</button>
+      <button class="btn-toolbar btn-save" onclick="saveAll()">儲存</button>
+    </div>
+  </div>
+
+  <!-- PHOTOS SECTION -->
+  <main class="album-main">
+    <div class="photos-container" id="photosContainer">
+      <!-- Photos rendered by JS -->
+    </div>
+    <div class="empty-photos" id="emptyPhotos" style="display:none;">
+      <p>尚無照片<br><small>點擊「新增照片」開始上傳</small></p>
+    </div>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <button class="lightbox-prev" onclick="lightboxNav(-1)">‹</button>
+    <button class="lightbox-next" onclick="lightboxNav(1)">›</button>
+    <div class="lightbox-content">
+      <img class="lightbox-img" id="lightboxImg" src="" alt="">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-copy">© 2025 LENS Photography</p>
+  </footer>
+
+  <!-- MODAL: Add Photo -->
+  <div class="modal-overlay" id="addPhotoModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>新增照片</h3>
+        <button class="modal-close" onclick="closeModal('addPhotoModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>照片網址</label>
+        <input type="url" id="photoUrl" placeholder="https://..." class="modal-input">
+        <label>標題（選填）</label>
+        <input type="text" id="photoTitle" placeholder="照片標題" class="modal-input">
+        <label>說明（選填）</label>
+        <textarea id="photoCaption" placeholder="這張照片的故事..." class="modal-textarea"></textarea>
+        <label>尺寸比例</label>
+        <select id="photoRatio" class="modal-select">
+          <option value="auto">自動</option>
+          <option value="landscape">橫向 (3:2)</option>
+          <option value="portrait">直向 (2:3)</option>
+          <option value="square">正方形 (1:1)</option>
+          <option value="wide">超寬 (16:9)</option>
+        </select>
+        <div class="photo-preview-wrap">
+          <img id="photoPreview" src="" alt="" style="display:none;" class="photo-preview-img">
+        </div>
+        <button class="btn-secondary" style="width:100%;margin-top:8px;" onclick="previewPhoto()">預覽</button>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('addPhotoModal')">取消</button>
+        <button class="btn-primary" onclick="addPhoto()">新增</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Edit Album Info -->
+  <div class="modal-overlay" id="editAlbumModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>編輯作品集資訊</h3>
+        <button class="modal-close" onclick="closeModal('editAlbumModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>作品集名稱</label>
+        <input type="text" id="editAlbumTitle" class="modal-input">
+        <label>副標題</label>
+        <input type="text" id="editAlbumSub" class="modal-input">
+        <label>封面圖片網址</label>
+        <input type="url" id="editAlbumCover" class="modal-input">
+        <label>標籤（逗號分隔）</label>
+        <input type="text" id="editAlbumTags" class="modal-input">
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('editAlbumModal')">取消</button>
+        <button class="btn-primary" onclick="saveAlbumInfo()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Edit Photo -->
+  <div class="modal-overlay" id="editPhotoModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>編輯照片</h3>
+        <button class="modal-close" onclick="closeModal('editPhotoModal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <label>照片網址</label>
+        <input type="url" id="editPhotoUrl" class="modal-input">
+        <label>標題</label>
+        <input type="text" id="editPhotoTitle" class="modal-input">
+        <label>說明</label>
+        <textarea id="editPhotoCaption" class="modal-textarea"></textarea>
+        <label>尺寸比例</label>
+        <select id="editPhotoRatio" class="modal-select">
+          <option value="auto">自動</option>
+          <option value="landscape">橫向 (3:2)</option>
+          <option value="portrait">直向 (2:3)</option>
+          <option value="square">正方形 (1:1)</option>
+          <option value="wide">超寬 (16:9)</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('editPhotoModal')">取消</button>
+        <button class="btn-primary" onclick="savePhotoEdit()">儲存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/album.js"></script>
+</body>
+</html>
