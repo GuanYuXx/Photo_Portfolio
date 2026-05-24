@@ -87,6 +87,7 @@ function createAlbumCard(album, index) {
   card.addEventListener('click', (e) => {
     if (isEditMode && !e.target.closest('.album-ctrl-btn')) return;
     if (!isEditMode) {
+      localStorage.setItem('lens_current_album_id', album.id);
       window.location.href = `album.html?id=${album.id}`;
     }
   });

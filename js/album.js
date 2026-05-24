@@ -15,7 +15,8 @@ let pendingCoverFile = null; // {file, previewUrl}
 // ---- Async Init ----
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
-  currentAlbumId = params.get('id');
+  // 優先使用網址參數，若因伺服器 Clean URL 跳轉導致參數丟失，則使用本地快取備份 ID 作為防禦機制
+  currentAlbumId = params.get('id') || localStorage.getItem('lens_current_album_id');
   if (!currentAlbumId) { window.location.href = 'index.html'; return; }
 
   initPortfolio()
@@ -47,8 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(err => {
       console.error('相簿初始化失敗:', err);
-      showToast('⚠️ 載入相簿資料失敗');
-      setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+      alert('⚠️ 相簿載入失敗！詳細錯誤原因:\n' + (err.stack || err));
+      // setTimeout(() => { window.location.href = 'index.html'; }, 2000);
     });
 });
 
