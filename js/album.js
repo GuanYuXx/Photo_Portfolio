@@ -12,6 +12,38 @@ let editingPhotoId = null;
 let pendingFiles = []; // [{file, previewUrl}]
 let pendingCoverFile = null; // {file, previewUrl}
 
+// Local image compression helper to prevent localStorage 5MB quota errors in Sandbox Mode
+function compressImage(file, maxWidth = 1000, quality = 0.6) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = () => resolve(e.target.result); // fallback to original base64
+      img.src = e.target.result;
+    };
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
+}
+
 // ---- Async Init ----
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
@@ -244,13 +276,8 @@ async function addPhotos() {
       progressText.innerHTML = `<span class="spinner spinner-inline"></span> 正在處理第 ${currentNum} / ${total} 張照片 (本地測試模式)...`;
       
       try {
-        // Convert to Base64 for sandbox localStorage testing
-        const dataUrl = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = (e) => resolve(e.target.result);
-          reader.onerror = (err) => reject(err);
-          reader.readAsDataURL(item.file);
-        });
+        // Convert and compress to highly optimized Base64 to bypass 5MB localStorage quota limit
+        const dataUrl = await compressImage(item.file, 1000, 0.6);
 
         addPhotoToAlbum(currentAlbumId, {
           url: dataUrl,
@@ -382,12 +409,8 @@ async function saveCover() {
   if (isSandbox()) {
     progressText.innerHTML = '<span class="spinner spinner-inline"></span> 正在轉換並套用本地封面照片...';
     try {
-      const dataUrl = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => resolve(e.target.result);
-        reader.onerror = (err) => reject(err);
-        reader.readAsDataURL(pendingCoverFile.file);
-      });
+      // Convert and compress to highly optimized Base64
+      const dataUrl = await compressImage(pendingCoverFile.file, 1200, 0.7);
 
       updateAlbum(currentAlbumId, { cover: dataUrl });
       currentAlbum = getAlbum(currentAlbumId);
