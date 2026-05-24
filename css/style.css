@@ -2,6 +2,14 @@
    LENS Photography Portfolio — Main Styles
    ========================================= */
 
+@font-face {
+  font-family: 'Chenyuluoyan';
+  src: url('https://cdn.jsdelivr.net/npm/@fontpkg/chenyuluoyan@1.0.0/ChenYuluoyan-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg: #0a0a0a;
   --surface: #141414;
@@ -175,6 +183,37 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   color: var(--text-muted);
   text-transform: uppercase;
   animation: fadeUp 1s 0.3s ease both;
+}
+
+.hero-profile {
+  margin-top: 32px;
+  font-family: 'Chenyuluoyan', var(--font-serif);
+  font-size: 28px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  animation: fadeUp 1s 0.45s ease both;
+}
+
+.profile-instagram {
+  color: var(--text);
+  font-size: 24px;
+  text-decoration: none;
+  transition: color var(--transition);
+  display: inline-flex;
+  align-items: center;
+}
+
+.profile-instagram:hover {
+  color: var(--accent);
+}
+
+.profile-divider {
+  color: var(--text-muted);
+  opacity: 0.4;
+  font-size: 14px;
 }
 
 .hero-scroll-hint {
@@ -416,14 +455,30 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 /* =========== FOOTER =========== */
 .footer {
   padding: 32px;
-  text-align: center;
   border-top: 1px solid var(--border);
+}
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  text-align: left;
 }
 .footer-copy {
   font-size: 11px;
   letter-spacing: 0.15em;
   color: var(--text-muted);
   text-transform: uppercase;
+}
+.footer-email {
+  font-size: 12px;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+.footer-email:hover {
+  color: var(--accent);
 }
 
 /* =========== MODALS =========== */
@@ -885,6 +940,10 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
     flex-direction: column;
     text-align: center;
     gap: 12px;
+  }
+  .footer-left {
+    align-items: center;
+    text-align: center;
   }
 }
 
