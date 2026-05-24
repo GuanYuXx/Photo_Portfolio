@@ -444,6 +444,24 @@ function saveHeroTextData(text) {
   return saveData(data);
 }
 
+// ---- Profile metadata ----
+function getProfileData() {
+  const d = loadData();
+  return {
+    name: d.profileName || '陳冠宇',
+    instagram: d.profileInstagram || 'stand_of_fish_121',
+    email: d.profileEmail || 'a0973471825@gmail.com'
+  };
+}
+
+function saveProfileData(name, instagram, email) {
+  const data = loadData();
+  data.profileName = name;
+  data.profileInstagram = instagram;
+  data.profileEmail = email;
+  return saveData(data);
+}
+
 // ---- Utils ----
 function showToast(msg, duration = 2500) {
   const existing = document.querySelector('.toast');

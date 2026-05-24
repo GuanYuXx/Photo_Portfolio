@@ -34,11 +34,11 @@
       
       <!-- HERO PROFILE SIGNATURE -->
       <div class="hero-profile">
-        <span class="profile-name">陳冠宇</span>
+        <span class="profile-name" id="profileName">陳冠宇</span>
         <span class="profile-divider">·</span>
-        <a href="https://instagram.com/stand_of_fish_121" target="_blank" class="profile-instagram">
+        <a href="https://instagram.com/stand_of_fish_121" target="_blank" class="profile-instagram" id="profileInstagramLink">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align: middle; margin-right: 6px; position: relative; top: -1px;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          stand_of_fish_121
+          <span id="profileInstagram">stand_of_fish_121</span>
         </a>
       </div>
     </div>
@@ -53,7 +53,7 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         新增作品集
       </button>
-      <button class="btn-toolbar" onclick="editHeroText()">編輯標語</button>
+      <button class="btn-toolbar" onclick="editHeroText()">編輯首頁資訊</button>
       <button class="btn-toolbar btn-save" id="btnSaveAll" onclick="saveAll()">儲存</button>
     </div>
   </div>
@@ -76,8 +76,8 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
-        <p class="footer-copy">© 2025 LENS Photography · 陳冠宇</p>
-        <a href="mailto:a0973471825@gmail.com" class="footer-email">a0973471825@gmail.com</a>
+        <p class="footer-copy">© 2025 LENS Photography · <span id="profileCopyName">陳冠宇</span></p>
+        <a href="mailto:a0973471825@gmail.com" class="footer-email" id="profileEmailLink">a0973471825@gmail.com</a>
       </div>
       <button class="admin-gear-btn" id="adminGearBtn" onclick="openAdminModal()" title="管理設定">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -107,15 +107,21 @@
     </div>
   </div>
 
-  <!-- MODAL: Edit Hero -->
+  <!-- MODAL: Edit Hero & Profile Info -->
   <div class="modal-overlay" id="heroModal">
     <div class="modal">
       <div class="modal-header">
-        <h3>編輯首頁標語</h3>
+        <h3>編輯首頁資訊與標語</h3>
         <button class="modal-close" onclick="closeModal('heroModal')">✕</button>
       </div>
       <div class="modal-body">
-        <label>標語文字</label>
+        <label>個人姓名</label>
+        <input type="text" id="profileNameInput" class="modal-input" placeholder="例：陳冠宇">
+        <label>Instagram 帳號 (不含 @)</label>
+        <input type="text" id="profileInstagramInput" class="modal-input" placeholder="例：stand_of_fish_121">
+        <label>聯絡電子郵件</label>
+        <input type="text" id="profileEmailInput" class="modal-input" placeholder="例：example@mail.com">
+        <label>首頁標語文字</label>
         <input type="text" id="heroInput" class="modal-input" placeholder="用鏡頭捕捉...">
       </div>
       <div class="modal-footer">

@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(() => {
       document.getElementById('heroDesc').textContent = getHeroText();
       
+      // Load and apply profile metadata
+      const profile = getProfileData();
+      document.getElementById('profileName').textContent = profile.name;
+      document.getElementById('profileInstagram').textContent = profile.instagram;
+      document.getElementById('profileInstagramLink').href = `https://instagram.com/${profile.instagram}`;
+      document.getElementById('profileCopyName').textContent = profile.name;
+      document.getElementById('profileEmailLink').textContent = profile.email;
+      document.getElementById('profileEmailLink').href = `mailto:${profile.email}`;
+      
       // Setup edit button visibility based on admin authentication
       const editBtn = document.getElementById('editToggleBtn');
       if (isAdmin()) {
@@ -184,19 +193,42 @@ function confirmDeleteAlbum(id) {
   showToast('作品集已刪除');
 }
 
-// ---- Hero Text ----
+// ---- Hero & Profile Info ----
 function editHeroText() {
+  const profile = getProfileData();
+  document.getElementById('profileNameInput').value = profile.name;
+  document.getElementById('profileInstagramInput').value = profile.instagram;
+  document.getElementById('profileEmailInput').value = profile.email;
   document.getElementById('heroInput').value = getHeroText();
   openModal('heroModal');
 }
 
 function saveHeroText() {
+  const name = document.getElementById('profileNameInput').value.trim();
+  const instagram = document.getElementById('profileInstagramInput').value.trim();
+  const email = document.getElementById('profileEmailInput').value.trim();
   const text = document.getElementById('heroInput').value.trim();
-  if (!text) return;
+  
+  if (!name) { alert('請輸入您的個人姓名'); return; }
+  if (!instagram) { alert('請輸入您的 Instagram 帳號'); return; }
+  if (!email) { alert('請輸入您的聯絡電子郵件'); return; }
+  if (!text) { alert('請輸入首頁標語文字'); return; }
+
+  // Save to database
+  saveProfileData(name, instagram, email);
   saveHeroTextData(text);
+
+  // Update DOM elements instantly
+  document.getElementById('profileName').textContent = name;
+  document.getElementById('profileInstagram').textContent = instagram;
+  document.getElementById('profileInstagramLink').href = `https://instagram.com/${instagram}`;
+  document.getElementById('profileCopyName').textContent = name;
+  document.getElementById('profileEmailLink').textContent = email;
+  document.getElementById('profileEmailLink').href = `mailto:${email}`;
   document.getElementById('heroDesc').textContent = text;
+
   closeModal('heroModal');
-  showToast('✓ 標語已更新');
+  showToast('✓ 首頁資訊與標語已更新');
 }
 
 // ---- Serverless Save Integration ----
