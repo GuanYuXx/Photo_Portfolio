@@ -2,6 +2,14 @@
    LENS — Album Page Styles
    ========================================= */
 
+@font-face {
+  font-family: 'Chenyuluoyan';
+  src: url('https://cdn.jsdelivr.net/npm/@fontpkg/chenyuluoyan@1.0.0/ChenYuluoyan-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* =========== ALBUM HERO =========== */
 .album-hero {
   position: relative;
@@ -323,10 +331,10 @@
 }
 
 .photo-section-title {
-  font-family: var(--font-serif);
-  font-size: clamp(16px, 2.2vw, 22px);
-  font-weight: 300;
-  letter-spacing: 0.25em;
+  font-family: 'Chenyuluoyan', var(--font-serif);
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-weight: normal;
+  letter-spacing: 0.1em;
   color: var(--accent);
   text-transform: uppercase;
   white-space: nowrap;
