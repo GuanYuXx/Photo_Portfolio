@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const editBtn = document.getElementById('editToggleBtn');
       if (isAdmin()) {
         editBtn.style.display = 'flex';
+        updateEditToolbarLabel();
       } else {
         editBtn.style.display = 'none';
       }
@@ -50,6 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => { window.location.href = 'index.html'; }, 2000);
     });
 });
+
+function updateEditToolbarLabel() {
+  const label = document.getElementById('editToolbarLabel');
+  if (label) {
+    label.textContent = isSandbox() ? '✦ 編輯模式 (本地測試)' : '✦ 編輯模式';
+    label.style.color = isSandbox() ? '#c8a96e' : '';
+  }
+}
 
 // ---- Render Hero ----
 function renderAlbumHero() {
@@ -142,10 +151,12 @@ function toggleEditMode() {
   document.getElementById('editBtnText').textContent = isEditMode ? '完成' : '編輯';
   document.getElementById('editToolbar').classList.toggle('visible', isEditMode);
   document.body.classList.toggle('edit-mode', isEditMode);
+  
+  updateEditToolbarLabel();
 }
 
 // ============================================================
-// ADD PHOTOS — Cloudinary Cloud Upload
+// ADD PHOTOS — Cloudinary Cloud Upload & Local Sandbox Mode
 // ============================================================
 function openAddPhotoModal() {
   pendingFiles = [];
@@ -167,7 +178,7 @@ function handleFileSelect(files) {
   if (!newFiles.length) { showToast('請選擇 JPG, WebP 或 PNG 圖片'); return; }
 
   newFiles.forEach(file => {
-    // Generate object URL for instant local previews without loading Base64 into browser memory
+    // Generate object URL for instant local previews
     const previewUrl = URL.createObjectURL(file);
     pendingFiles.push({ file, previewUrl });
   });
@@ -196,11 +207,11 @@ function removePending(index) {
   renderUploadPreviews();
 }
 
-// Perform sequential async upload to Cloudinary
+// Perform sequential async upload
 async function addPhotos() {
   const config = getAdminConfig();
-  if (!config.cloudName || !config.preset) {
-    alert('⚠️ 偵測到未設定 Cloudinary！\n請先在頁尾的「管理員設定」中設定 Cloud Name 與 Upload Preset，以啟用無限制的高畫質大圖託管服務！');
+  if (!isSandbox() && (!config.cloudName || !config.preset)) {
+    alert('⚠️ 偵測到未設定 Cloudinary！\n請先在頁尾的「管理員設定」中設定 Cloud Name 與 Upload Preset，以啟用無限制的高畫質大圖託管服務！\n或者您可以點擊「本地測試」啟用沙盒模式體驗功能。');
     return;
   }
 
@@ -227,36 +238,61 @@ async function addPhotos() {
     // Update progress bar
     const percent = Math.round((i / total) * 100);
     progressBar.style.width = `${percent}%`;
-    progressText.innerHTML = `<span class="spinner spinner-inline"></span> 正在上傳第 ${currentNum} / ${total} 張照片...`;
 
-    try {
-      const formData = new FormData();
-      formData.append('file', item.file);
-      formData.append('upload_preset', config.preset);
+    if (isSandbox()) {
+      progressText.innerHTML = `<span class="spinner spinner-inline"></span> 正在處理第 ${currentNum} / ${total} 張照片 (本地測試模式)...`;
+      
+      try {
+        // Convert to Base64 for sandbox localStorage testing
+        const dataUrl = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target.result);
+          reader.onerror = (err) => reject(err);
+          reader.readAsDataURL(item.file);
+        });
 
-      const res = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudName}/image/upload`, {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!res.ok) {
-        throw new Error(`Cloudinary API 回應錯誤 ${res.status}`);
+        addPhotoToAlbum(currentAlbumId, {
+          url: dataUrl,
+          title: item.file.name.substring(0, item.file.name.lastIndexOf('.')) || '',
+          caption: '',
+          ratio: 'auto'
+        });
+        successCount++;
+      } catch (err) {
+        console.error('本地讀取照片失敗:', err);
       }
+    } else {
+      progressText.innerHTML = `<span class="spinner spinner-inline"></span> 正在上傳第 ${currentNum} / ${total} 張照片...`;
 
-      const resData = await res.json();
-      const secureUrl = resData.secure_url;
+      try {
+        const formData = new FormData();
+        formData.append('file', item.file);
+        formData.append('upload_preset', config.preset);
 
-      // Add to database
-      addPhotoToAlbum(currentAlbumId, {
-        url: secureUrl,
-        title: item.file.name.substring(0, item.file.name.lastIndexOf('.')) || '', // default title from filename
-        caption: '',
-        ratio: 'auto'
-      });
-      successCount++;
-    } catch (e) {
-      console.error(`照片上傳失敗 (${item.file.name}):`, e);
-      showToast(`❌ 上傳失敗: ${item.file.name}`);
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudName}/image/upload`, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!res.ok) {
+          throw new Error(`Cloudinary API 回應錯誤 ${res.status}`);
+        }
+
+        const resData = await res.json();
+        const secureUrl = resData.secure_url;
+
+        // Add to database
+        addPhotoToAlbum(currentAlbumId, {
+          url: secureUrl,
+          title: item.file.name.substring(0, item.file.name.lastIndexOf('.')) || '', // default title
+          caption: '',
+          ratio: 'auto'
+        });
+        successCount++;
+      } catch (e) {
+        console.error(`照片上傳失敗 (${item.file.name}):`, e);
+        showToast(`❌ 上傳失敗: ${item.file.name}`);
+      }
     }
 
     // Revoke preview object URL
@@ -264,7 +300,7 @@ async function addPhotos() {
   }
 
   progressBar.style.width = '100%';
-  progressText.textContent = `上傳完成！成功: ${successCount}，失敗: ${total - successCount}`;
+  progressText.textContent = isSandbox() ? `處理完成！成功: ${successCount}` : `上傳完成！成功: ${successCount}，失敗: ${total - successCount}`;
 
   // Reload UI
   currentAlbum = getAlbum(currentAlbumId);
@@ -275,7 +311,7 @@ async function addPhotos() {
     closeModal('addPhotoModal');
     addBtn.disabled = false;
     cancelBtn.disabled = false;
-    showToast(`✓ 已成功新增 ${successCount} 張照片`);
+    showToast(isSandbox() ? `✓ 已成功載入 ${successCount} 張測試照片` : `✓ 已成功新增 ${successCount} 張照片`);
     pendingFiles = [];
   }, 1200);
 }
@@ -293,7 +329,7 @@ function setupUploadZoneDrop() {
 }
 
 // ============================================================
-// COVER PHOTO — Cloudinary Upload
+// COVER PHOTO — Cloudinary Upload & Local Sandbox
 // ============================================================
 function openCoverModal() {
   pendingCoverFile = null;
@@ -324,8 +360,8 @@ function handleCoverSelect(files) {
 
 async function saveCover() {
   const config = getAdminConfig();
-  if (!config.cloudName || !config.preset) {
-    alert('⚠️ 偵測到未設定 Cloudinary！\n請先設定 Cloud Name 與 Upload Preset，以啟用無限制的高畫質相簿封面託管服務！');
+  if (!isSandbox() && (!config.cloudName || !config.preset)) {
+    alert('⚠️ 偵測到未設定 Cloudinary！\n請先設定 Cloud Name 與 Upload Preset，以啟用無限制的高畫質相簿封面託管服務！\n或者您可以開啟本地測試沙盒模式。');
     return;
   }
 
@@ -341,46 +377,81 @@ async function saveCover() {
   cancelBtn.disabled = true;
   progressContainer.style.display = 'block';
   progressBar.style.width = '30%';
-  progressText.innerHTML = '<span class="spinner spinner-inline"></span> 正在上傳封面照片至 Cloudinary...';
 
-  try {
-    const formData = new FormData();
-    formData.append('file', pendingCoverFile.file);
-    formData.append('upload_preset', config.preset);
+  if (isSandbox()) {
+    progressText.innerHTML = '<span class="spinner spinner-inline"></span> 正在轉換並套用本地封面照片...';
+    try {
+      const dataUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = (err) => reject(err);
+        reader.readAsDataURL(pendingCoverFile.file);
+      });
 
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudName}/image/upload`, {
-      method: 'POST',
-      body: formData
-    });
+      updateAlbum(currentAlbumId, { cover: dataUrl });
+      currentAlbum = getAlbum(currentAlbumId);
+      renderAlbumHero();
 
-    if (!res.ok) throw new Error('Cloudinary Cover Upload Failed');
-    
-    progressBar.style.width = '80%';
-    const resData = await res.json();
-    const secureUrl = resData.secure_url;
+      progressBar.style.width = '100%';
+      progressText.textContent = '本地套用成功！';
 
-    updateAlbum(currentAlbumId, { cover: secureUrl });
-    currentAlbum = getAlbum(currentAlbumId);
-    renderAlbumHero();
-
-    progressBar.style.width = '100%';
-    progressText.textContent = '上傳封面成功！';
-
-    setTimeout(() => {
-      closeModal('coverModal');
+      setTimeout(() => {
+        closeModal('coverModal');
+        saveBtn.disabled = false;
+        cancelBtn.disabled = false;
+        showToast('✓ 封面已套用 (本地模式)');
+        
+        URL.revokeObjectURL(pendingCoverFile.previewUrl);
+        pendingCoverFile = null;
+      }, 1000);
+    } catch (e) {
+      console.error('本地讀取封面失敗:', e);
       saveBtn.disabled = false;
       cancelBtn.disabled = false;
-      showToast('✓ 封面已更新');
+      progressContainer.style.display = 'none';
+    }
+  } else {
+    progressText.innerHTML = '<span class="spinner spinner-inline"></span> 正在上傳封面照片至 Cloudinary...';
+
+    try {
+      const formData = new FormData();
+      formData.append('file', pendingCoverFile.file);
+      formData.append('upload_preset', config.preset);
+
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${config.cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) throw new Error('Cloudinary Cover Upload Failed');
       
-      URL.revokeObjectURL(pendingCoverFile.previewUrl);
-      pendingCoverFile = null;
-    }, 1000);
-  } catch (e) {
-    console.error('封面照片上傳失敗:', e);
-    alert('封面照片上傳失敗，請稍後再試！');
-    saveBtn.disabled = false;
-    cancelBtn.disabled = false;
-    progressContainer.style.display = 'none';
+      progressBar.style.width = '80%';
+      const resData = await res.json();
+      const secureUrl = resData.secure_url;
+
+      updateAlbum(currentAlbumId, { cover: secureUrl });
+      currentAlbum = getAlbum(currentAlbumId);
+      renderAlbumHero();
+
+      progressBar.style.width = '100%';
+      progressText.textContent = '上傳封面成功！';
+
+      setTimeout(() => {
+        closeModal('coverModal');
+        saveBtn.disabled = false;
+        cancelBtn.disabled = false;
+        showToast('✓ 封面已更新');
+        
+        URL.revokeObjectURL(pendingCoverFile.previewUrl);
+        pendingCoverFile = null;
+      }, 1000);
+    } catch (e) {
+      console.error('封面照片上傳失敗:', e);
+      alert('封面照片上傳失敗，請稍後再試！');
+      saveBtn.disabled = false;
+      cancelBtn.disabled = false;
+      progressContainer.style.display = 'none';
+    }
   }
 }
 
@@ -464,7 +535,11 @@ async function saveAll() {
     await updateAlbum(currentAlbumId, { layout: currentAlbum.layout });
     await commitDataToGitHub();
     
-    showToast('✓ 儲存並同步至 GitHub 成功！');
+    if (isSandbox()) {
+      showToast('✓ 本地儲存成功（測試模式）！');
+    } else {
+      showToast('✓ 儲存並同步至 GitHub 成功！');
+    }
     btn.innerHTML = `✓ 已儲存`;
     setTimeout(() => {
       btn.innerHTML = originalHtml;
@@ -530,7 +605,7 @@ function showLightboxPhoto(index) {
   lightboxIndex = (index + photos.length) % photos.length;
   const photo = photos[lightboxIndex];
   
-  // Use dynamic Cloudinary optimizer for large lightbox fullscreen view (width 1600px looks amazing)
+  // Use dynamic Cloudinary optimizer for large lightbox fullscreen view
   const largeUrl = optimizeImageUrl(photo.url, 1600);
   
   const img = document.getElementById('lightboxImg');
@@ -569,10 +644,8 @@ function handleSwipe() {
   if (Math.abs(diff) < threshold) return;
   
   if (diff > 0) {
-    // Swiped left -> show next
     lightboxNav(1);
   } else {
-    // Swiped right -> show prev
     lightboxNav(-1);
   }
 }
@@ -607,6 +680,13 @@ function openAdminModal() {
   document.getElementById('adminGithubToken').value = config.token;
   document.getElementById('adminCloudinaryName').value = config.cloudName;
   document.getElementById('adminCloudinaryPreset').value = config.preset;
+
+  const sandboxBanner = document.getElementById('sandboxBanner');
+  if (isSandbox()) {
+    sandboxBanner.style.display = 'block';
+  } else {
+    sandboxBanner.style.display = 'none';
+  }
 
   const logoutBtn = document.getElementById('btnLogout');
   if (isAdmin()) {
@@ -669,7 +749,7 @@ function saveAdminSettings() {
   const cloudName = document.getElementById('adminCloudinaryName').value.trim();
   const preset = document.getElementById('adminCloudinaryPreset').value.trim();
 
-  saveAdminConfig({ token, repo, cloudName, preset });
+  saveAdminConfig({ token, repo, cloudName, preset, sandbox: false });
   
   // Show edit toggle btn
   document.getElementById('editToggleBtn').style.display = 'flex';
@@ -678,6 +758,23 @@ function saveAdminSettings() {
   showToast('✓ 管理員設定已儲存！');
 
   // Reload data
+  initPortfolio().then(() => {
+    currentAlbum = getAlbum(currentAlbumId);
+    renderAlbumHero();
+    renderPhotos();
+  });
+}
+
+function enableSandboxMode() {
+  saveAdminConfig({ sandbox: true });
+  
+  // Show edit toggle btn
+  document.getElementById('editToggleBtn').style.display = 'flex';
+  updateEditToolbarLabel();
+
+  closeModal('adminSettingsModal');
+  showToast('✓ 已啟用本地測試模式！可任意編輯。');
+
   initPortfolio().then(() => {
     currentAlbum = getAlbum(currentAlbumId);
     renderAlbumHero();

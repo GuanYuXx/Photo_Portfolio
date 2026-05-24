@@ -39,7 +39,7 @@
   <!-- EDIT TOOLBAR -->
   <div class="edit-toolbar" id="editToolbar">
     <div class="edit-toolbar-inner">
-      <span class="edit-toolbar-label">✦ 編輯模式</span>
+      <span class="edit-toolbar-label" id="editToolbarLabel">✦ 編輯模式</span>
       <select class="layout-select" id="layoutSelect" onchange="changeLayout(this.value)">
         <option value="masonry">磚牆排版</option>
         <option value="grid">網格排版</option>
@@ -228,17 +228,23 @@
         </div>
 
         <div class="tab-content" id="tabContentCredentials">
+          <!-- Sandbox Active Banner (hidden by default) -->
+          <div class="sandbox-banner" id="sandboxBanner" style="display: none; padding: 10px 14px; background: rgba(200, 169, 110, 0.15); border: 1px solid var(--accent); color: var(--accent); font-size: 12px; border-radius: 2px; margin-bottom: 16px; line-height: 1.6;">
+            ⚠️ <b>目前已啟用本地測試模式！</b><br>
+            您不需輸入任何 GitHub / Cloudinary 金鑰即可測試所有編輯與拖拉上傳功能。變更將<b>僅儲存在本機瀏覽器</b>中。
+          </div>
+
           <form id="adminSettingsForm" onsubmit="event.preventDefault(); saveAdminSettings();">
             <div class="form-row">
               <label for="adminGithubRepo">GitHub 儲存庫路徑</label>
-              <input type="text" id="adminGithubRepo" class="modal-input" placeholder="例：username/lens-portfolio" required>
+              <input type="text" id="adminGithubRepo" class="modal-input" placeholder="例：username/lens-portfolio">
               <small class="form-hint">格式為：用戶名/儲存庫名</small>
             </div>
             
             <div class="form-row">
               <label for="adminGithubToken">GitHub 個人存取權杖 (PAT)</label>
               <div class="input-password-wrap">
-                <input type="password" id="adminGithubToken" class="modal-input" placeholder="ghp_xxxxxxxxxxxx" required>
+                <input type="password" id="adminGithubToken" class="modal-input" placeholder="ghp_xxxxxxxxxxxx">
                 <button type="button" class="input-toggle-pwd" onclick="togglePasswordVisibility('adminGithubToken')">👁</button>
               </div>
               <small class="form-hint">需具備 `contents` 的讀寫權限以同步 `data.json` 檔案</small>
@@ -261,7 +267,10 @@
             <div class="connection-status" id="connectionStatus"></div>
 
             <div class="admin-actions-row">
-              <button type="button" class="btn-secondary" id="btnTestConnection" onclick="testConnection()">測試連線</button>
+              <div class="admin-left-actions" style="display: flex; gap: 8px;">
+                <button type="button" class="btn-secondary" id="btnTestConnection" onclick="testConnection()">測試連線</button>
+                <button type="button" class="btn-secondary" id="btnEnableSandbox" onclick="enableSandboxMode()" style="border-color: var(--accent); color: var(--accent);">本地測試</button>
+              </div>
               <div class="admin-primary-actions">
                 <button type="button" class="btn-danger" id="btnLogout" onclick="logoutAdmin()" style="display:none;">登出管理員</button>
                 <button type="submit" class="btn-primary" id="btnSaveConfig">儲存設定</button>
@@ -287,7 +296,7 @@
                 <li>最下方點擊 <b>Developer Settings</b> -> <b>Personal Access Tokens</b> -> 選擇 <b>Fine-grained tokens</b>。</li>
                 <li>點擊 <b>Generate new token</b>，名稱填入 <code>LENS-CMS</code>。</li>
                 <li><b>Repository access</b> 選擇 <b>Only select repositories</b> 並選擇您的作品集專案。</li>
-                <li>在 <b>Permissions</b> 下的 <b>Repository permissions</b> 中，將 <b>Contents</b> 設為 <b>Read and Write</b>。</li>
+                <li>在 <b>Permissions</b> 下의 <b>Repository permissions</b> 中，將 <b>Contents</b> 設為 <b>Read and Write</b>。</li>
                 <li>點擊產生，將權杖複製下來並貼在左側登入欄位中。</li>
               </ol>
             </div>

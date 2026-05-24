@@ -9,6 +9,7 @@ const CONF_GITHUB_TOKEN = 'lens_github_token';
 const CONF_GITHUB_REPO = 'lens_github_repo';
 const CONF_CLOUDINARY_NAME = 'lens_cloudinary_name';
 const CONF_CLOUDINARY_PRESET = 'lens_cloudinary_preset';
+const CONF_SANDBOX_MODE = 'lens_sandbox_mode';
 
 const DEFAULT_DATA = {
   heroText: '用鏡頭捕捉每一個轉瞬即逝的瞬間',
@@ -174,9 +175,14 @@ async function initPortfolio() {
 
 // ---- Admin Config Utilities ----
 function isAdmin() {
+  if (localStorage.getItem(CONF_SANDBOX_MODE) === 'true') return true;
   const token = localStorage.getItem(CONF_GITHUB_TOKEN);
   const repo = localStorage.getItem(CONF_GITHUB_REPO);
   return !!(token && repo);
+}
+
+function isSandbox() {
+  return localStorage.getItem(CONF_SANDBOX_MODE) === 'true';
 }
 
 function getAdminConfig() {
@@ -184,7 +190,8 @@ function getAdminConfig() {
     token: localStorage.getItem(CONF_GITHUB_TOKEN) || '',
     repo: localStorage.getItem(CONF_GITHUB_REPO) || '',
     cloudName: localStorage.getItem(CONF_CLOUDINARY_NAME) || '',
-    preset: localStorage.getItem(CONF_CLOUDINARY_PRESET) || ''
+    preset: localStorage.getItem(CONF_CLOUDINARY_PRESET) || '',
+    sandbox: isSandbox()
   };
 }
 
@@ -193,6 +200,9 @@ function saveAdminConfig(config) {
   if (config.repo) localStorage.setItem(CONF_GITHUB_REPO, config.repo.trim());
   if (config.cloudName) localStorage.setItem(CONF_CLOUDINARY_NAME, config.cloudName.trim());
   if (config.preset) localStorage.setItem(CONF_CLOUDINARY_PRESET, config.preset.trim());
+  if (config.sandbox !== undefined) {
+    localStorage.setItem(CONF_SANDBOX_MODE, config.sandbox ? 'true' : 'false');
+  }
   return true;
 }
 
@@ -201,6 +211,7 @@ function clearAdminConfig() {
   localStorage.removeItem(CONF_GITHUB_REPO);
   localStorage.removeItem(CONF_CLOUDINARY_NAME);
   localStorage.removeItem(CONF_CLOUDINARY_PRESET);
+  localStorage.removeItem(CONF_SANDBOX_MODE);
   localStorage.removeItem(DATA_KEY); // also clear staging
   activeData = null;
 }
@@ -221,6 +232,12 @@ function optimizeImageUrl(url, width = 1200) {
 async function commitDataToGitHub() {
   if (!isAdmin()) {
     throw new Error('未登入或未設定管理員金鑰！');
+  }
+
+  // If in local sandbox mode, simply write to localStorage and complete!
+  if (isSandbox()) {
+    localStorage.setItem(DATA_KEY, JSON.stringify(activeData));
+    return true;
   }
 
   const { token, repo } = getAdminConfig();
@@ -332,6 +349,7 @@ function getAlbum(id) {
   return data.albums.find(a => a.id === id) || null;
 }
 
+// ... rest of albums CRUD remains unmodified
 function createAlbumData(title, subtitle, cover, tags) {
   const data = loadData();
   const album = {

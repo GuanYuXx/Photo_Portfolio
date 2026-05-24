@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const editBtn = document.getElementById('editToggleBtn');
       if (isAdmin()) {
         editBtn.style.display = 'flex';
+        // If in sandbox, show special indicator
+        updateEditToolbarLabel();
       } else {
         editBtn.style.display = 'none';
       }
@@ -28,6 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('⚠️ 資料載入失敗，將使用預設資料');
     });
 });
+
+function updateEditToolbarLabel() {
+  const label = document.getElementById('editToolbarLabel');
+  if (label) {
+    label.textContent = isSandbox() ? '✦ 編輯模式 (本地測試)' : '✦ 編輯模式';
+    label.style.color = isSandbox() ? '#c8a96e' : '';
+  }
+}
 
 // ---- Render Albums ----
 function renderAlbums() {
@@ -138,6 +148,8 @@ function toggleEditMode() {
   txt.textContent = isEditMode ? '完成' : '編輯';
   toolbar.classList.toggle('visible', isEditMode);
   document.body.classList.toggle('edit-mode', isEditMode);
+  
+  updateEditToolbarLabel();
 }
 
 // ---- New Album Modal ----
@@ -196,7 +208,11 @@ async function saveAll() {
 
   try {
     await commitDataToGitHub();
-    showToast('✓ 儲存並同步至 GitHub 成功！');
+    if (isSandbox()) {
+      showToast('✓ 本地儲存成功（測試模式）！');
+    } else {
+      showToast('✓ 儲存並同步至 GitHub 成功！');
+    }
     btn.innerHTML = `✓ 已儲存`;
     setTimeout(() => {
       btn.innerHTML = originalHtml;
@@ -222,6 +238,13 @@ function openAdminModal() {
   document.getElementById('adminGithubToken').value = config.token;
   document.getElementById('adminCloudinaryName').value = config.cloudName;
   document.getElementById('adminCloudinaryPreset').value = config.preset;
+
+  const sandboxBanner = document.getElementById('sandboxBanner');
+  if (isSandbox()) {
+    sandboxBanner.style.display = 'block';
+  } else {
+    sandboxBanner.style.display = 'none';
+  }
 
   const logoutBtn = document.getElementById('btnLogout');
   if (isAdmin()) {
@@ -284,7 +307,7 @@ function saveAdminSettings() {
   const cloudName = document.getElementById('adminCloudinaryName').value.trim();
   const preset = document.getElementById('adminCloudinaryPreset').value.trim();
 
-  saveAdminConfig({ token, repo, cloudName, preset });
+  saveAdminConfig({ token, repo, cloudName, preset, sandbox: false });
   
   // Show edit toggle btn
   document.getElementById('editToggleBtn').style.display = 'flex';
@@ -293,6 +316,21 @@ function saveAdminSettings() {
   showToast('✓ 管理員設定已儲存！');
   
   // Reload portfolio data to align staging
+  initPortfolio().then(() => {
+    renderAlbums();
+  });
+}
+
+function enableSandboxMode() {
+  saveAdminConfig({ sandbox: true });
+  
+  // Show edit toggle btn
+  document.getElementById('editToggleBtn').style.display = 'flex';
+  updateEditToolbarLabel();
+
+  closeModal('adminSettingsModal');
+  showToast('✓ 已啟用本地測試模式！可任意編輯。');
+
   initPortfolio().then(() => {
     renderAlbums();
   });
@@ -318,6 +356,7 @@ function openModal(id) {
   document.getElementById(id).classList.add('open');
 }
 
+// ... rest of code remains unmodified
 function closeModal(id) {
   document.getElementById(id).classList.remove('open');
 }
