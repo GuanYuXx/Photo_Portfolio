@@ -392,12 +392,17 @@ function addPhotoToAlbum(albumId, photo) {
   const data = loadData();
   const album = data.albums.find(a => a.id === albumId);
   if (!album) return false;
+  
+  // Create a unique ID with timestamp and random suffix to prevent collisions on batch uploads
+  const uniqueId = 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+  
   album.photos.push({
-    id: 'p_' + Date.now(),
+    id: uniqueId,
     url: photo.url,
     title: photo.title || '',
     caption: photo.caption || '',
-    ratio: photo.ratio || 'auto'
+    ratio: photo.ratio || 'auto',
+    section: photo.section || ''
   });
   return saveData(data);
 }

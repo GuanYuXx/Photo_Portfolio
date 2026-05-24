@@ -246,6 +246,10 @@ function openAddPhotoModal() {
   document.getElementById('addPhotosBtn').disabled = true;
   document.getElementById('photoFileInput').value = '';
   
+  // Clear batch section name
+  const batchSecInput = document.getElementById('batchPhotoSection');
+  if (batchSecInput) batchSecInput.value = '';
+  
   // Hide progress indicator
   document.getElementById('uploadProgressContainer').style.display = 'none';
   document.getElementById('uploadProgressBar').style.width = '0%';
@@ -305,6 +309,10 @@ async function addPhotos() {
   const addBtn = document.getElementById('addPhotosBtn');
   const cancelBtn = document.getElementById('btnCancelAddPhoto');
 
+  // Read the batch section name
+  const batchSectionInput = document.getElementById('batchPhotoSection');
+  const batchSection = batchSectionInput ? batchSectionInput.value.trim() : '';
+
   // Disable buttons & show progress bar
   addBtn.disabled = true;
   cancelBtn.disabled = true;
@@ -331,7 +339,8 @@ async function addPhotos() {
           url: dataUrl,
           title: item.file.name.substring(0, item.file.name.lastIndexOf('.')) || '',
           caption: '',
-          ratio: 'auto'
+          ratio: 'auto',
+          section: batchSection
         });
         successCount++;
       } catch (err) {
@@ -362,7 +371,8 @@ async function addPhotos() {
           url: secureUrl,
           title: item.file.name.substring(0, item.file.name.lastIndexOf('.')) || '', // default title
           caption: '',
-          ratio: 'auto'
+          ratio: 'auto',
+          section: batchSection
         });
         successCount++;
       } catch (e) {

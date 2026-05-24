@@ -108,6 +108,10 @@
         </div>
         <input type="file" id="photoFileInput" accept=".jpg,.jpeg,.png" multiple style="display:none;" onchange="handleFileSelect(this.files)">
 
+        <!-- Batch section name input -->
+        <label for="batchPhotoSection">本批上傳相片的分區區塊/場景名稱 (選填)</label>
+        <input type="text" id="batchPhotoSection" class="modal-input" placeholder="例：第一幕：清晨、特寫鏡頭（留空代表不分區）">
+
         <!-- Upload loading overlay (hidden by default) -->
         <div class="upload-progress-container" id="uploadProgressContainer" style="display: none;">
           <div class="progress-bar-wrap">
