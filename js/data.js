@@ -268,9 +268,13 @@ async function commitDataToGitHub() {
     if (getRes.ok) {
       const getJson = await getRes.json();
       sha = getJson.sha;
+    } else if (getRes.status !== 404) {
+      const errorJson = await getRes.json().catch(() => ({}));
+      throw new Error(errorJson.message || `取得 ` + filePath + ` 資訊失敗 (HTTP ${getRes.status})`);
     }
   } catch (e) {
-    console.warn('Could not retrieve SHA, trying to write as new file:', e);
+    console.error('取得 SHA 發生錯誤:', e);
+    throw new Error(`無法連接 GitHub API 取得檔案狀態，原因:\n` + e.message);
   }
 
   // 2. Perform the PUT request to commit changes
