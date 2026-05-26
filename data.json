@@ -5,119 +5,377 @@
   "profileEmail": "a0973471825@gmail.com",
   "albums": [
     {
-      "id": "album_001",
-      "title": "街頭呼吸",
-      "subtitle": "城市的喧囂與靜謐",
-      "cover": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&q=80",
-      "tags": ["街拍", "城市", "黑白"],
-      "layout": "masonry",
-      "createdAt": "2024-01-15",
+      "id": "album_1779629655035",
+      "title": "中興吉他成發『這很吉嗎』",
+      "subtitle": "",
+      "cover": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629684/xmvz4a1bj1ux69fpufeg.jpg",
+      "tags": [
+        "音樂",
+        "舞台",
+        "活動"
+      ],
+      "layout": "sectioned",
+      "createdAt": "2026-05-24",
       "photos": [
         {
-          "id": "p001",
-          "url": "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=80",
-          "title": "霧中的城市",
-          "caption": "清晨的霧氣籠罩整個城市，街燈漸漸熄滅",
-          "ratio": "landscape"
-        },
-        {
-          "id": "p002",
-          "url": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1200&q=80",
-          "title": "捷運出口",
-          "caption": "忙碌的通勤者",
-          "ratio": "portrait"
-        },
-        {
-          "id": "p003",
-          "url": "https://images.unsplash.com/photo-1534430480872-3498386e7856?w=1200&q=80",
-          "title": "老街巷弄",
+          "id": "p_1779629783773_njbsb",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629783/u7hd18vtmnnn3icrucsz.jpg",
+          "title": "DSC08748",
           "caption": "",
-          "ratio": "auto"
+          "ratio": "auto",
+          "section": "竊笑"
         },
         {
-          "id": "p004",
-          "url": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80",
-          "title": "夜市燈火",
-          "caption": "台灣夜市特有的溫暖光芒",
-          "ratio": "landscape"
-        },
-        {
-          "id": "p005",
-          "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
-          "title": "天橋",
+          "id": "p_1779629786731_n3pdv",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629784/gvnhnzrl8vldj274niv0.jpg",
+          "title": "DSC08749",
           "caption": "",
-          "ratio": "square"
+          "ratio": "auto",
+          "section": "竊笑"
         },
         {
-          "id": "p006",
-          "url": "https://images.unsplash.com/photo-1480796927426-f609979314bd?w=1200&q=80",
-          "title": "雨後",
-          "caption": "雨後的街道倒映著霓虹",
-          "ratio": "portrait"
-        }
-      ]
-    },
-    {
-      "id": "album_002",
-      "title": "山與海之間",
-      "subtitle": "台灣島嶼的自然風貌",
-      "cover": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-      "tags": ["風景", "自然", "台灣"],
-      "layout": "fullwidth",
-      "createdAt": "2024-03-20",
-      "photos": [
-        {
-          "id": "p101",
-          "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80",
-          "title": "合歡山雲海",
-          "caption": "破曉時分，雲海從山谷升起",
-          "ratio": "wide"
-        },
-        {
-          "id": "p102",
-          "url": "https://images.unsplash.com/photo-1439405326854-014607f694d7?w=1400&q=80",
-          "title": "太平洋的邊界",
+          "id": "p_1779629787987_8v5o9",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629787/ydnt5vbvk123efbkdcmh.jpg",
+          "title": "DSC08750",
           "caption": "",
-          "ratio": "wide"
+          "ratio": "auto",
+          "section": "竊笑"
         },
         {
-          "id": "p103",
-          "url": "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1400&q=80",
-          "title": "瀑布之聲",
-          "caption": "深山中的秘境瀑布",
-          "ratio": "portrait"
-        }
-      ]
-    },
-    {
-      "id": "album_003",
-      "title": "人物肖像",
-      "subtitle": "Portraits of Life",
-      "cover": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80",
-      "tags": ["人像", "肖像", "光影"],
-      "layout": "grid",
-      "createdAt": "2024-05-10",
-      "photos": [
-        {
-          "id": "p201",
-          "url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=80",
-          "title": "光之窗",
-          "caption": "午後窗邊的逆光",
-          "ratio": "portrait"
-        },
-        {
-          "id": "p202",
-          "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80",
-          "title": "眼神",
+          "id": "p_1779629789258_w700z",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629788/qsx43xvnltyhgkskw1tv.jpg",
+          "title": "DSC08751",
           "caption": "",
-          "ratio": "portrait"
+          "ratio": "auto",
+          "section": "竊笑"
         },
         {
-          "id": "p203",
-          "url": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=1200&q=80",
-          "title": "思緒",
-          "caption": "安靜的片刻",
-          "ratio": "portrait"
+          "id": "p_1779629790901_ix7tz",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629790/ggqyohxvla0inym8ihdc.jpg",
+          "title": "DSC08752",
+          "caption": "",
+          "ratio": "auto",
+          "section": "竊笑"
+        },
+        {
+          "id": "p_1779629884383_9t4o0",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629883/jx6nmmmxrh86nzgfaji8.jpg",
+          "title": "DSC08773",
+          "caption": "",
+          "ratio": "auto",
+          "section": "褪黑素"
+        },
+        {
+          "id": "p_1779629885757_v7m0m",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629884/wcgznxwonpvy0at3wwxr.jpg",
+          "title": "DSC08774",
+          "caption": "",
+          "ratio": "auto",
+          "section": "褪黑素"
+        },
+        {
+          "id": "p_1779629887213_19vdy",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629886/mopgvg0vzmziofs4okrl.jpg",
+          "title": "DSC08775",
+          "caption": "",
+          "ratio": "auto",
+          "section": "褪黑素"
+        },
+        {
+          "id": "p_1779629890438_6frf2",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629889/xx9e7ejz89ur9o9rujkt.jpg",
+          "title": "DSC08786",
+          "caption": "",
+          "ratio": "auto",
+          "section": "褪黑素"
+        },
+        {
+          "id": "p_1779629892135_7pjim",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629891/rbmpsedlqrpii9caljzz.jpg",
+          "title": "DSC08787",
+          "caption": "",
+          "ratio": "auto",
+          "section": "褪黑素"
+        },
+        {
+          "id": "p_1779629921335_eljpm",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779629920/gjegpbrmoijzl6fztrfy.jpg",
+          "title": "DSC08777",
+          "caption": "",
+          "ratio": "auto",
+          "section": "褪黑素"
+        },
+        {
+          "id": "p_1779630009708_dlud2",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779630008/bof6nuzuj3yobwlid1vn.jpg",
+          "title": "DSC08808",
+          "caption": "",
+          "ratio": "auto",
+          "section": "烏雲"
+        },
+        {
+          "id": "p_1779630011224_2890x",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779630010/ivomxqq3acwks62tkmmi.jpg",
+          "title": "DSC08811",
+          "caption": "",
+          "ratio": "auto",
+          "section": "烏雲"
+        },
+        {
+          "id": "p_1779630012666_0ap37",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779630011/aenilm6tlkvf8qz8u1rp.jpg",
+          "title": "DSC08816",
+          "caption": "",
+          "ratio": "auto",
+          "section": "烏雲"
+        },
+        {
+          "id": "p_1779630151966_zrjfx",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779630151/mmsjpqxblxyrgnhmoxik.jpg",
+          "title": "DSC08846",
+          "caption": "",
+          "ratio": "auto",
+          "section": "朝你而去"
+        },
+        {
+          "id": "p_1779630152975_gc2v6",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779630152/pszvkjvamnr01melxw3j.jpg",
+          "title": "DSC08848",
+          "caption": "",
+          "ratio": "auto",
+          "section": "朝你而去"
+        },
+        {
+          "id": "p_1779630154208_tafrt",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779630153/z9qfj2cbiapojhsunrvg.jpg",
+          "title": "DSC08851",
+          "caption": "",
+          "ratio": "auto",
+          "section": "朝你而去"
+        },
+        {
+          "id": "p_1779636185109_i6jc3",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636184/yszzat7dsrhnhgebbryu.jpg",
+          "title": "DSC08874",
+          "caption": "",
+          "ratio": "auto",
+          "section": "sorry"
+        },
+        {
+          "id": "p_1779636186198_4afzd",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636185/xryin6ijduwzgzmybhgg.jpg",
+          "title": "DSC08875",
+          "caption": "",
+          "ratio": "auto",
+          "section": "sorry"
+        },
+        {
+          "id": "p_1779636390394_t323t",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636389/qai55xwelnn48tyisaoa.jpg",
+          "title": "DSC08878",
+          "caption": "",
+          "ratio": "auto",
+          "section": "午夜猶明"
+        },
+        {
+          "id": "p_1779636391777_ojvf9",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636390/jwnmzj4hhpxznhknxajo.jpg",
+          "title": "DSC08879",
+          "caption": "",
+          "ratio": "auto",
+          "section": "午夜猶明"
+        },
+        {
+          "id": "p_1779636393056_xkuf0",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636392/pjbpzgipm54q8efjflwu.jpg",
+          "title": "DSC08890",
+          "caption": "",
+          "ratio": "auto",
+          "section": "午夜猶明"
+        },
+        {
+          "id": "p_1779636394443_4t1h3",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636393/xyu7x7jacwp0lclwsevi.jpg",
+          "title": "DSC08891",
+          "caption": "",
+          "ratio": "auto",
+          "section": "午夜猶明"
+        },
+        {
+          "id": "p_1779636395826_utm3o",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636394/cfkcckogzlzo4jepbx38.jpg",
+          "title": "DSC08892",
+          "caption": "",
+          "ratio": "auto",
+          "section": "午夜猶明"
+        },
+        {
+          "id": "p_1779636613288_z72io",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636612/ap6npowloinzmajfayh5.jpg",
+          "title": "DSC08922",
+          "caption": "",
+          "ratio": "auto",
+          "section": "Young man"
+        },
+        {
+          "id": "p_1779636614995_ovymk",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636614/c90r3jri6ugo5gchlgbw.jpg",
+          "title": "DSC08923",
+          "caption": "",
+          "ratio": "auto",
+          "section": "Young man"
+        },
+        {
+          "id": "p_1779636616832_g0nj9",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636615/jq8u2fod2fk9nlxd9pdh.jpg",
+          "title": "DSC08924",
+          "caption": "",
+          "ratio": "auto",
+          "section": "Young man"
+        },
+        {
+          "id": "p_1779636718577_pgly8",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636717/sxbhlddlaa8mbwwpuq91.jpg",
+          "title": "DSC08990",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636720902_rtg8c",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636719/ehjgawxtiq8vsxnylg02.jpg",
+          "title": "DSC08991",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636723399_w877u",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636722/qljkhxf7zqvuwcppiyh5.jpg",
+          "title": "DSC08992",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636771057_3v0ns",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636769/ami2gimfhctmhwvjb43x.jpg",
+          "title": "DSC08996",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636774977_qebmu",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636774/vlls4qbccol88o82lrre.jpg",
+          "title": "DSC09002",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636776374_6lmrc",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636775/s4ah6kc76fdzcnsslxsj.jpg",
+          "title": "DSC09010",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636773118_mpa20",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636771/os0dykkpp29yyl8ptjel.jpg",
+          "title": "DSC08997",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636830517_nl1pj",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636829/lm0to3yqdlwefy4d6xbi.jpg",
+          "title": "DSC08946",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636832000_ojw5u",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636831/dzvo48foz44frqkj2d8r.jpg",
+          "title": "DSC08963",
+          "caption": "",
+          "ratio": "auto",
+          "section": ""
+        },
+        {
+          "id": "p_1779636881933_in5ej",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636881/tla1nn0vl7gwf04eltan.jpg",
+          "title": "DSC09050",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636883835_3kz41",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636882/hetps1yuog2h03k7jfng.jpg",
+          "title": "DSC09051",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636886182_dfcg2",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636884/zi89gbcqalpqox5okcuc.jpg",
+          "title": "DSC09052",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636888185_z4why",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636887/mt2qnna30becevrr4zt2.jpg",
+          "title": "DSC09060",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636889981_0be5x",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636889/xujpfmook1cxbext2whg.jpg",
+          "title": "DSC09061",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636891709_ew1ag",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636890/cwuvtmutxbsczgjfwhh4.jpg",
+          "title": "DSC09062",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636893649_9bpnj",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636892/wnrhgcrsqhwxtdvllvze.jpg",
+          "title": "DSC09067",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636895317_epbwu",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636894/mnrfalyzlnejhkjn8xpy.jpg",
+          "title": "DSC09068",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
+        },
+        {
+          "id": "p_1779636896987_laj2y",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1779636896/cqzvnratpxe6cjf3lsht.jpg",
+          "title": "DSC09069",
+          "caption": "",
+          "ratio": "auto",
+          "section": "22.5"
         }
       ]
     }
