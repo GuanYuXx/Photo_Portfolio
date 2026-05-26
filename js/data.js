@@ -259,10 +259,9 @@ async function commitDataToGitHub() {
   // 1. Get the current file's SHA (required by GitHub API to update files)
   let sha = '';
   try {
-    const getRes = await fetch(url, {
+    const getRes = await fetch(url + `?t=${Date.now()}`, {
       headers: {
-        'Authorization': `token ${token}`,
-        'Cache-Control': 'no-cache'
+        'Authorization': `token ${token}`
       }
     });
     if (getRes.ok) {
