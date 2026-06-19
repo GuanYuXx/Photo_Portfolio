@@ -156,7 +156,7 @@ async function initPortfolio() {
 
   // 2. Fetch data.json from the server
   try {
-    const res = await fetch('data.json');
+    const res = await fetch('data.json?v=' + Date.now());
     if (res.ok) {
       activeData = await res.json();
       if (isAdmin()) {
