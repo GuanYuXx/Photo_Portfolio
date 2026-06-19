@@ -378,6 +378,18 @@
           "section": "22.5"
         }
       ]
+    },
+    {
+      "id": "album_1781833880185",
+      "title": "港動躁浪2025",
+      "subtitle": "",
+      "cover": "https://images.unsplash.com/photo-1510784722466-f2aa240d4703?w=800&q=80",
+      "tags": [
+        "音樂祭"
+      ],
+      "layout": "masonry",
+      "createdAt": "2026-06-19",
+      "photos": []
     }
   ]
 }
