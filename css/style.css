@@ -10,7 +10,15 @@
   font-display: swap;
 }
 
+/* =========================================
+   主題系統（Theme Tokens）
+   - 預設 = Obsidian Gold（黑曜金）寫在 :root
+   - 其他主題用 [data-theme="..."] 覆蓋
+   - 切換時 JS 只改 <html data-theme="...">
+   ========================================= */
+
 :root {
+  /* ---- Obsidian Gold · 黑曜金（預設深色主題）---- */
   --bg: #0a0a0a;
   --surface: #141414;
   --surface2: #1e1e1e;
@@ -20,11 +28,66 @@
   --accent: #c8a96e;
   --accent-dim: rgba(200, 169, 110, 0.15);
   --danger: #c0392b;
+
+  /* 主題相關的合成色（之前是寫死在元件裡，現在抽成 token） */
+  --nav-bg: rgba(10, 10, 10, 0.92);
+  --watermark: rgba(255, 255, 255, 0.02);
+  --card-overlay: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+  --hero-glow:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(200,169,110,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(200,169,110,0.03) 0%, transparent 60%);
+  --menu-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  /* 卡片照片上方的文字色：兩個主題都保持淺色（因為下面 overlay 一直是深色漸層） */
+  --on-media: rgba(232, 228, 220, 0.85);
+
+  /* ---- 非主題（不會因主題改變）---- */
   --nav-h: 64px;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-mono: 'DM Mono', 'Courier New', monospace;
   --radius: 2px;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============ Editorial Linen · 雜誌亞麻（淺色主題）============ */
+[data-theme="linen"] {
+  --bg: #f5f1ea;
+  --surface: #ffffff;
+  --surface2: #ebe5da;
+  --border: #d8d0c2;
+  --text: #2a2520;
+  --text-muted: #7a7268;
+  --accent: #3a5a4a;
+  --accent-dim: rgba(58, 90, 74, 0.10);
+  --danger: #a8443a;
+
+  --nav-bg: rgba(245, 241, 234, 0.92);
+  --watermark: rgba(42, 37, 32, 0.04);
+  --card-overlay: linear-gradient(to top, rgba(20,15,10,0.78) 0%, transparent 60%);
+  --hero-glow:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(58,90,74,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(58,90,74,0.04) 0%, transparent 60%);
+  --menu-shadow: 0 10px 30px rgba(80, 60, 30, 0.12);
+}
+
+/* ============ Vintage Film · 復古底片（暖深棕 + 焦糖金）============ */
+[data-theme="vintage"] {
+  --bg: #1a1410;
+  --surface: #211a14;
+  --surface2: #2a201a;
+  --border: #3a2c20;
+  --text: #f0e0c8;
+  --text-muted: #9a8266;
+  --accent: #e8b860;
+  --accent-dim: rgba(232, 184, 96, 0.13);
+  --danger: #c0392b;
+
+  --nav-bg: rgba(26, 20, 16, 0.93);
+  --watermark: rgba(232, 184, 96, 0.04);
+  --card-overlay: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+  --hero-glow:
+    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(232,184,96,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(232,184,96,0.03) 0%, transparent 60%);
+  --menu-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,7 +119,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   top: 0; left: 0; right: 0;
   z-index: 100;
   height: var(--nav-h);
-  background: rgba(10,10,10,0.92);
+  background: var(--nav-bg);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   transition: var(--transition);
@@ -114,6 +177,90 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   background: var(--accent-dim);
 }
 
+/* =========== THEME PICKER（主題切換器）=========== */
+.theme-picker-wrap {
+  position: relative;
+}
+.theme-picker-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  transition: all var(--transition);
+}
+.theme-picker-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+.theme-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 240px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 6px;
+  display: none;
+  box-shadow: var(--menu-shadow);
+  z-index: 200;
+  animation: fadeIn 0.15s ease;
+}
+.theme-menu.open { display: block; }
+
+.theme-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-align: left;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.theme-menu-item:hover {
+  background: var(--accent-dim);
+  color: var(--text);
+}
+.theme-menu-item.active {
+  color: var(--accent);
+}
+.theme-menu-swatches {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.theme-menu-sw {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(127,127,127,0.2);
+}
+.theme-menu-label {
+  flex: 1;
+  white-space: nowrap;
+}
+.theme-menu-check {
+  font-size: 12px;
+  color: var(--accent);
+  visibility: hidden;
+}
+.theme-menu-item.active .theme-menu-check {
+  visibility: visible;
+}
+
 /* =========== HERO =========== */
 .hero {
   min-height: 100vh;
@@ -130,9 +277,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 50%, rgba(200,169,110,0.05) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(200,169,110,0.03) 0%, transparent 60%);
+  background: var(--hero-glow);
   pointer-events: none;
 }
 
@@ -146,7 +291,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   font-size: clamp(60px, 15vw, 200px);
   font-weight: 300;
   letter-spacing: 0.25em;
-  color: rgba(255,255,255,0.02);
+  color: var(--watermark);
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
@@ -355,7 +500,7 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
 .album-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+  background: var(--card-overlay);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -390,12 +535,13 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   font-weight: 300;
   line-height: 1.2;
   margin-bottom: 6px;
+  color: var(--on-media);
 }
 
 .album-card-sub {
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: rgba(232,228,220,0.6);
+  color: var(--on-media);
 }
 
 .album-card-count {
@@ -404,7 +550,8 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   right: 20px;
   font-size: 11px;
   letter-spacing: 0.1em;
-  color: rgba(232,228,220,0.5);
+  color: var(--on-media);
+  opacity: 0.65;
 }
 
 /* Edit mode card controls */

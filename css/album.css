@@ -70,7 +70,8 @@
 .album-subtitle {
   font-size: 14px;
   letter-spacing: 0.08em;
-  color: rgba(232,228,220,0.65);
+  color: var(--text);
+  opacity: 0.65;
   max-width: 500px;
   line-height: 1.7;
 }

@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LENS — Photography Portfolio</title>
+  <!-- 在 CSS 載入前先套用主題，避免「閃白」(FOUC, Flash of Unstyled Content)
+       白名單格式檢查（小寫英數字+底線/連字號，1-30 字元）即可放行，
+       對不上的 data-theme 會 fallback 到 :root 預設值，所以是安全的。 -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('lens_theme');
+        if (t && /^[a-z0-9_-]{1,30}$/.test(t)) {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -15,6 +28,21 @@
       <a href="index.html" class="nav-logo">LENS</a>
       <div class="nav-right">
         <span class="nav-subtitle">Photography Portfolio</span>
+
+        <!-- THEME PICKER（主題切換器） -->
+        <div class="theme-picker-wrap" id="themePickerWrap">
+          <button class="theme-picker-btn" id="themePickerBtn" type="button" title="切換主題" aria-label="切換主題">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="7"  r="1.6" fill="currentColor" stroke="none"/>
+              <circle cx="17" cy="12" r="1.6" fill="currentColor" stroke="none"/>
+              <circle cx="7"  cy="14" r="1.6" fill="currentColor" stroke="none"/>
+              <circle cx="14" cy="17" r="1.6" fill="currentColor" stroke="none"/>
+            </svg>
+          </button>
+          <div class="theme-menu" id="themeMenu"></div>
+        </div>
+
         <button class="edit-toggle-btn" id="editToggleBtn" onclick="toggleEditMode()" style="display: none;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
           <span id="editBtnText">編輯</span>
@@ -237,5 +265,6 @@
 
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/theme.js"></script>
 </body>
 </html>
