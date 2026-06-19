@@ -65,14 +65,12 @@
   line-height: 1.05;
   letter-spacing: -0.01em;
   margin-bottom: 16px;
-  color: var(--on-media);
 }
 
 .album-subtitle {
   font-size: 14px;
   letter-spacing: 0.08em;
-  color: var(--on-media);
-  opacity: 0.75;
+  color: rgba(232,228,220,0.65);
   max-width: 500px;
   line-height: 1.7;
 }
@@ -81,9 +79,21 @@
   margin-top: 20px;
   font-size: 11px;
   letter-spacing: 0.15em;
-  color: var(--on-media);
-  opacity: 0.6;
+  color: var(--text-muted);
   text-transform: uppercase;
+}
+
+/* =========== LINEN 主題專屬覆寫 ===========
+   Obsidian / Vintage 是深色主題，album-hero 的標題天生就在深色底
+   看得到；Linen 是淺色主題，但 album-hero 還是疊在深色照片漸層上，
+   所以 .album-title 要強制改成淺色 (var(--on-media))。
+   只 scope 在 Linen 下，不會影響其他主題的原始視覺。 */
+[data-theme="linen"] .album-title {
+  color: var(--on-media);
+}
+[data-theme="linen"] .album-meta {
+  color: var(--on-media);
+  opacity: 0.65;
 }
 
 /* =========== ALBUM MAIN =========== */
