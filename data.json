@@ -383,13 +383,62 @@
       "id": "album_1781833880185",
       "title": "港動躁浪2025",
       "subtitle": "",
-      "cover": "https://images.unsplash.com/photo-1510784722466-f2aa240d4703?w=800&q=80",
+      "cover": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1781833978/uowk1r2w83vv0whnetws.jpg",
       "tags": [
         "音樂祭"
       ],
-      "layout": "masonry",
+      "layout": "sectioned",
       "createdAt": "2026-06-19",
-      "photos": []
+      "photos": [
+        {
+          "id": "p_1781834053292_99vyz",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1781834051/zjf9rn3rm327m2faktqp.jpg",
+          "title": "20250928-62",
+          "caption": "",
+          "ratio": "auto",
+          "section": "粗大Band"
+        },
+        {
+          "id": "p_1781834055450_fgkr0",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1781834054/sggglk2zldigaqgwshye.jpg",
+          "title": "20250928-64",
+          "caption": "",
+          "ratio": "auto",
+          "section": "粗大Band"
+        },
+        {
+          "id": "p_1781834056920_ii0fp",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1781834055/nvlngb3owf9s0v6vrhyy.jpg",
+          "title": "20250928-66",
+          "caption": "",
+          "ratio": "auto",
+          "section": "粗大Band"
+        },
+        {
+          "id": "p_1781834060050_igyzb",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1781834058/apo3lifcsiyyh6epkh2d.jpg",
+          "title": "20250928-67",
+          "caption": "",
+          "ratio": "auto",
+          "section": "粗大Band"
+        },
+        {
+          "id": "p_1781834063893_cu9kn",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1781834062/h1q8dx9geqbfoaqxgxj5.jpg",
+          "title": "20250928-69",
+          "caption": "",
+          "ratio": "auto",
+          "section": "粗大Band"
+        },
+        {
+          "id": "p_1781834066438_8ojht",
+          "url": "https://res.cloudinary.com/ddgl9jla4/image/upload/v1781834065/zy4qhnt6u0sejylr97ad.jpg",
+          "title": "20250928-70",
+          "caption": "",
+          "ratio": "auto",
+          "section": "粗大Band"
+        }
+      ]
     }
   ]
 }
