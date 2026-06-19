@@ -65,13 +65,14 @@
   line-height: 1.05;
   letter-spacing: -0.01em;
   margin-bottom: 16px;
+  color: var(--on-media);
 }
 
 .album-subtitle {
   font-size: 14px;
   letter-spacing: 0.08em;
-  color: var(--text);
-  opacity: 0.65;
+  color: var(--on-media);
+  opacity: 0.75;
   max-width: 500px;
   line-height: 1.7;
 }
@@ -80,7 +81,8 @@
   margin-top: 20px;
   font-size: 11px;
   letter-spacing: 0.15em;
-  color: var(--text-muted);
+  color: var(--on-media);
+  opacity: 0.6;
   text-transform: uppercase;
 }
 
