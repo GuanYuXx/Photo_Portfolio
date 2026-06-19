@@ -402,15 +402,13 @@ document.addEventListener('click', (e) => {
 });
 
 // ---- Nav scroll effect ----
+// 只負責 toggle class；顏色完全由 CSS 主題 token 決定（不再寫死 rgba）。
 function setupNavScroll() {
-  window.addEventListener('scroll', () => {
-    const nav = document.getElementById('nav');
-    if (window.scrollY > 60) {
-      nav.style.background = 'rgba(10,10,10,0.98)';
-    } else {
-      nav.style.background = 'rgba(10,10,10,0.92)';
-    }
-  });
+  const nav = document.getElementById('nav');
+  if (!nav) return;
+  const update = () => nav.classList.toggle('nav-scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', update, { passive: true });
+  update(); // 初始化（重整時若已捲動位置 > 60 也能正確套用）
 }
 
 // Keyboard ESC to close

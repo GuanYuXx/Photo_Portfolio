@@ -31,6 +31,7 @@
 
   /* 主題相關的合成色（之前是寫死在元件裡，現在抽成 token） */
   --nav-bg: rgba(10, 10, 10, 0.92);
+  --nav-bg-scrolled: rgba(10, 10, 10, 0.98);
   --watermark: rgba(255, 255, 255, 0.02);
   --card-overlay: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
   --hero-glow:
@@ -61,6 +62,7 @@
   --danger: #a8443a;
 
   --nav-bg: rgba(245, 241, 234, 0.92);
+  --nav-bg-scrolled: rgba(245, 241, 234, 0.98);
   --watermark: rgba(42, 37, 32, 0.04);
   --card-overlay: linear-gradient(to top, rgba(20,15,10,0.78) 0%, transparent 60%);
   --hero-glow:
@@ -82,6 +84,7 @@
   --danger: #c0392b;
 
   --nav-bg: rgba(26, 20, 16, 0.93);
+  --nav-bg-scrolled: rgba(26, 20, 16, 0.98);
   --watermark: rgba(232, 184, 96, 0.04);
   --card-overlay: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
   --hero-glow:
@@ -123,6 +126,11 @@ button { cursor: pointer; border: none; background: none; font-family: var(--fon
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   transition: var(--transition);
+}
+/* 捲動超過 60px 時 JS 會加上 .nav-scrolled，讓背景更不透明（強化分隔感）
+   顏色完全交給主題 token，JS 不再寫死任何顏色值。 */
+.nav.nav-scrolled {
+  background: var(--nav-bg-scrolled);
 }
 
 .nav-inner {

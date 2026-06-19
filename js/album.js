@@ -735,10 +735,13 @@ function handleSwipe() {
 }
 
 // ---- Nav scroll ----
+// 只負責 toggle class；顏色完全由 CSS 主題 token 決定（不再寫死 rgba）。
 function setupNavScroll() {
-  window.addEventListener('scroll', () => {
-    document.getElementById('nav').style.background = window.scrollY > 60 ? 'rgba(10,10,10,0.98)' : 'rgba(10,10,10,0.92)';
-  });
+  const nav = document.getElementById('nav');
+  if (!nav) return;
+  const update = () => nav.classList.toggle('nav-scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', update, { passive: true });
+  update();
 }
 
 // ---- Keyboard ----
